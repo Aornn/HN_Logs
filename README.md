@@ -38,10 +38,15 @@ return :
 }
 ```
 
-#Install
+# Install
 
 Go version 1.11 min.
+Extract the file test.tsv.zip 
+
 `export GO111MODULE=on`
+
 `go run main.go`
+
 or
+
 `go run server`

@@ -11,8 +11,9 @@ func (node Tree) recursiveSearch(time []int, start int, ret int) int {
 		if start <= len(time)-1 {
 			currTime = time[start]
 			if node[currTime] != nil {
-				if node[currTime].IsEnded == true {
-					ret = ret + node[currTime].Total
+				if start == len(time)-1 {
+					ret += node[currTime].Total
+					return ret
 				}
 				ret = node[currTime].Leaf.recursiveSearch(time, start+1, ret)
 			}

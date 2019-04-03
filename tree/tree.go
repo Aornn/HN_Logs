@@ -70,7 +70,9 @@ func (tree Tree) AddWord(query []int, data string) {
 			}
 		} else {
 			if node[currRune] == nil {
-				node[currRune] = &leaf{Key: currRune, Leaf: make(Tree)}
+				node[currRune] = &leaf{Key: currRune, Leaf: make(Tree), Total: 1}
+			} else {
+				node[currRune].Total++
 			}
 		}
 		node = node[currRune].Leaf
@@ -89,17 +91,16 @@ func IndexFile(tree Tree, path string) {
 	for scanner.Scan() {
 		var newQ []int
 		q := scanner.Text()
-		query := strings.Split(q, "\t")[0]
-		data := strings.Split(q, "\t")[1]
-		query = strings.ReplaceAll(query, "-", " ")
+		data := strings.Split(q, "\t")
+		query := strings.ReplaceAll(data[0], "-", " ")
 		query = strings.ReplaceAll(query, ":", " ")
 		tempQuery := strings.Split(query, " ")
 		for i := 0; i < len(tempQuery); i++ {
 			val, _ := strconv.Atoi(tempQuery[i])
 			newQ = append(newQ, val)
 		}
-		if len(newQ) == 6 {
-			tree.AddWord(newQ, data)
+		if len(newQ) == 6 && len(data) > 0 {
+			tree.AddWord(newQ, data[1])
 		}
 	}
 	elapsed := time.Since(start)
